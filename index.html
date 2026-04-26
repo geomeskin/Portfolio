@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alex Rodriguez — GIS & AI Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a18;
+    --ink-muted: #5f5e5a;
+    --ink-faint: #b4b2a9;
+    --surface: #faf9f6;
+    --card: #ffffff;
+    --border: rgba(0,0,0,0.09);
+    --accent: #0f6e56;
+    --accent-light: #e1f5ee;
+    --accent-mid: #1d9e75;
+    --tag-bg: #e1f5ee;
+    --tag-text: #085041;
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); font-size: 16px; line-height: 1.7; min-height: 100vh; }
+  .page { max-width: 860px; margin: 0 auto; padding: 0 2rem 6rem; }
+
+  .hero { padding: 5rem 0 4rem; border-bottom: 0.5px solid var(--border); display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: end; animation: fadeUp 0.5s ease both; }
+  .hero-eyebrow { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-mid); font-weight: 500; margin-bottom: 1rem; }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.4rem, 6vw, 3.8rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.25rem; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-bio { font-size: 1.05rem; color: var(--ink-muted); max-width: 520px; line-height: 1.75; }
+  .avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: var(--accent); flex-shrink: 0; border: 2px solid var(--accent-mid); }
+  .hero-links { display: flex; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+  .hero-links a { font-size: 13px; font-weight: 500; color: var(--ink-muted); text-decoration: none; display: flex; align-items: center; gap: 6px; padding: 6px 14px; border: 0.5px solid var(--border); border-radius: 100px; background: var(--card); transition: all 0.15s; }
+  .hero-links a:hover { color: var(--accent); border-color: var(--accent-mid); background: var(--accent-light); }
+
+  section { margin-top: 4rem; animation: fadeUp 0.5s 0.1s ease both; }
+  .section-label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; margin-bottom: 1.5rem; }
+
+  .projects { display: flex; flex-direction: column; gap: 1.25rem; }
+  .project-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem 2rem; transition: border-color 0.15s, transform 0.15s; position: relative; overflow: hidden; }
+  .project-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--accent-mid); border-radius: 16px 0 0 16px; opacity: 0; transition: opacity 0.15s; }
+  .project-card:hover { border-color: rgba(15,110,86,0.25); transform: translateY(-1px); }
+  .project-card:hover::before { opacity: 1; }
+  .project-number { font-family: 'DM Serif Display', serif; font-size: 3rem; line-height: 1; color: var(--accent-light); font-style: italic; position: absolute; right: 1.75rem; top: 1.25rem; pointer-events: none; }
+  .project-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.5rem; padding-right: 3.5rem; }
+  .project-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; color: var(--ink); line-height: 1.3; }
+  .live-link { font-size: 11px; font-weight: 500; color: var(--accent); text-decoration: none; padding: 3px 10px; border: 0.5px solid var(--accent-mid); border-radius: 100px; background: var(--accent-light); white-space: nowrap; transition: all 0.15s; margin-top: 4px; display: inline-block; }
+  .live-link:hover { background: var(--accent); color: white; }
+  .project-desc { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.7; margin: 0.6rem 0 1rem; max-width: 620px; }
+  .project-desc strong { color: var(--ink); font-weight: 500; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; background: var(--tag-bg); color: var(--tag-text); letter-spacing: 0.03em; }
+  .tag.gray { background: #f1efe8; color: #444441; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; }
+  .skill-card { background: var(--card); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.25rem 1.5rem; }
+  .skill-card h3 { font-size: 12px; font-weight: 500; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.09em; }
+  .skill-card p { font-size: 13px; color: var(--ink-muted); line-height: 1.6; }
+
+  .contact-band { margin-top: 4rem; background: var(--accent); border-radius: 16px; padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; animation: fadeUp 0.5s 0.2s ease both; }
+  .contact-band h2 { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: #e1f5ee; line-height: 1.2; }
+  .contact-band p { font-size: 0.9rem; color: rgba(225,245,238,0.7); margin-top: 0.35rem; }
+  .contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .contact-links a { font-size: 13px; font-weight: 500; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: all 0.15s; }
+  .contact-links a.primary { background: #e1f5ee; color: var(--accent); }
+  .contact-links a.primary:hover { background: #ffffff; }
+  .contact-links a.secondary { background: rgba(255,255,255,0.12); color: #e1f5ee; border: 0.5px solid rgba(255,255,255,0.25); }
+  .contact-links a.secondary:hover { background: rgba(255,255,255,0.2); }
+
+  .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--ink-faint); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div>
+      <p class="hero-eyebrow">GIS Professional & AI Problem Solver</p>
+      <h1>Alejandro<br><em>Alex</em> Rodriguez</h1>
+      <p class="hero-bio">30+ years of GIS expertise across the full ESRI stack — now combining deep spatial thinking with hands-on AI collaboration to design, build, and deploy real working applications.</p>
+      <div class="hero-links">
+        <a href="mailto:da.meskin@gmail.com">✉ da.meskin@gmail.com</a>
+        <a href="https://www.linkedin.com/in/alexorodriguez/" target="_blank">in LinkedIn</a>
+      </div>
+    </div>
+    <div class="avatar">AR</div>
+  </div>
+
+  <section>
+    <p class="section-label">Projects</p>
+    <div class="projects">
+
+      <div class="project-card">
+        <div class="project-number">01</div>
+        <div class="project-header">
+          <p class="project-title">Vehicle Maintenance Logger</p>
+          <a class="live-link" href="https://vehiclemaintenancelogger.vercel.app/#" target="_blank">↗ Live App</a>
+        </div>
+        <p class="project-desc">
+          A fully deployed, production web application for logging vehicle maintenance records <strong>by voice</strong>. Built with multi-user authentication, owner-scoped database security (Row Level Security), and a complete password recovery flow — including a mobile-specific fix for iOS Safari's microphone permission requirements. Real users are actively using it. Ongoing development across multiple sessions.
+        </p>
+        <div class="tags">
+          <span class="tag">Voice Input</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Vercel</span>
+          <span class="tag">GitHub</span>
+          <span class="tag">React</span>
+          <span class="tag">Multi-user Auth</span>
+          <span class="tag gray">Full Stack</span>
+          <span class="tag gray">Production</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">02</div>
+        <div class="project-header">
+          <p class="project-title">Forge of Empires Community Info Tool</p>
+          <a class="live-link" href="https://geomeskin.github.io/FoE_Community_INFO/" target="_blank">↗ Live App</a>
+        </div>
+        <p class="project-desc">
+          A multi-feature community dashboard for an active online gaming guild, live on GitHub Pages across 11+ development sessions. Includes a <strong>self-service stats generator</strong> — guild members drop in their own data export and instantly get five populated tabs: boost reference, battle boosts, Great Buildings planner, fragment tracker, and friend manager. Built with a deliberate <strong>privacy-first architecture</strong>: no server, no database, no accounts — all processing happens locally in the browser. Data never leaves the user's machine.
+        </p>
+        <div class="tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">GitHub Pages</span>
+          <span class="tag">Privacy-First</span>
+          <span class="tag">Self-Service</span>
+          <span class="tag">Data Processing</span>
+          <span class="tag gray">Community Tool</span>
+          <span class="tag gray">Live & Deployed</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">03</div>
+        <div class="project-header">
+          <p class="project-title">Forge of Empires Battle Logger</p>
+        </div>
+        <p class="project-desc">
+          A form-to-spreadsheet logging pipeline for tracking guild battle performance. An HTML form submits Guild Expedition (GE) and Guild Battlegrounds (GBG) battle data to a <strong>Google Apps Script web API</strong>, which parses the payload and appends records to the correct Google Sheet tab automatically. A practical Google Workspace integration that removes manual data entry from a repetitive community task.
+        </p>
+        <div class="tags">
+          <span class="tag">Google Apps Script</span>
+          <span class="tag">Google Sheets</span>
+          <span class="tag">Web API</span>
+          <span class="tag">HTML Form</span>
+          <span class="tag gray">Automation</span>
+          <span class="tag gray">Google Workspace</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-number">04</div>
+        <div class="project-header">
+          <p class="project-title">Coin Collection Melt Value Calculator</p>
+        </div>
+        <p class="project-desc">
+          A Google Sheets tool that calculates precious metal melt values across a personal coin collection inventory. Pulls from live spot prices with <strong>automatic timestamp tracking</strong> on every price update — ensuring calculations always reflect current market data. A focused automation that eliminates manual calculation and keeps the data honest.
+        </p>
+        <div class="tags">
+          <span class="tag">Google Sheets</span>
+          <span class="tag">Google Apps Script</span>
+          <span class="tag">Live Spot Prices</span>
+          <span class="tag gray">Personal Automation</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <p class="section-label">Skills & Expertise</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <h3>GIS & Spatial Analysis</h3>
+        <p>30+ years across the full ESRI stack — ArcGIS Online, ArcGIS Pro, ModelBuilder, Python scripting in AGOL, and spatial data management.</p>
+      </div>
+      <div class="skill-card">
+        <h3>AI Collaboration</h3>
+        <p>Proven ability to scope, direct, and iterate on AI-assisted development — from concept through to deployed, production applications.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Full Stack Development</h3>
+        <p>React, Supabase, Vercel, GitHub, Google Apps Script — selecting the right tool for the problem, not the trendiest one.</p>
+      </div>
+      <div class="skill-card">
+        <h3>Problem Solving</h3>
+        <p>Domain-first thinker. Identifies real problems, defines clear targets, navigates technical complexity, and ships working solutions.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="contact-band">
+    <div>
+      <h2>Let's work together.</h2>
+      <p>Open to GIS consulting, AI-assisted project work, and contract opportunities.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:da.meskin@gmail.com" class="primary">Send an email</a>
+      <a href="https://www.linkedin.com/in/alexorodriguez/" target="_blank" class="secondary">View LinkedIn</a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>Alejandro Rodriguez — GIS & AI Portfolio</span>
+    <span>Built with Claude · 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
